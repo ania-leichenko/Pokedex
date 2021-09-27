@@ -1,34 +1,32 @@
-import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
+import React from "react";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-     maxWidth: 230,
-     textAlign: "center",
+      maxWidth: 160,
+      textAlign: "center",
     },
     media: {
-      height: "225px",
-      width: "225px",
+      height: "150px",
+      width: "150px",
     },
-  }),
+  })
 );
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({ pokemon }) {
   const classes = useStyles();
-  
+  console.log(pokemon);
+
   return (
     <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png"
-        title="Bulbasaur" 
-      />
+      <CardMedia className={classes.media} image={pokemon.sprites.front_default} />
       <CardContent>
-       <h3>Bulbasaur</h3>
+        <h3>{pokemon.name}</h3>
       </CardContent>
     </Card>
   );
