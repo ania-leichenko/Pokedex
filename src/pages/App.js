@@ -1,10 +1,11 @@
-import Card from '../component/Card';
+import Card from '../component/main/Card';
 import {useState, useEffect} from 'react';
 import { Grid } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
+import Select from '../component/main/Select';
 
 const useStyles = makeStyles((theme) => ({
-  root:{
+  main:{
     flexGrow: 1,
     maxWidth: 1000,
     isplay: "block",
@@ -39,14 +40,17 @@ function App() {
   }, [])
 
   return (
-    <div className={classes.root}>
-      <Grid container>
-        {pokemons.map((pokemon) => (
-          <Grid item xs={2} key={pokemon.id} className={classes.paper}>
-            <Card pokemon={pokemon}></Card>
-          </Grid>
-        ))}
-      </Grid>
+    <div>
+      <main className={classes.main}>
+        <Select></Select>
+        <Grid container>
+          {pokemons.map((pokemon) => (
+            <Grid item xs={2} key={pokemon.id} className={classes.paper}>
+              <Card pokemon={pokemon}></Card>
+            </Grid>
+          ))}
+        </Grid>
+      </main>
     </div>
   );
 }
