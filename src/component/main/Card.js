@@ -22,7 +22,6 @@ const useStyles = makeStyles(() =>
 
 export default function RecipeReviewCard({ pokemon }) {
   const classes = useStyles();
-  console.log(pokemon);
 
   return (
     <Card className={classes.root}>
