@@ -1,8 +1,9 @@
-import Card from '../component/main/Card';
+import Card from '../component/Card';
 import {useState, useEffect} from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Select from '../component/main/Select';
+import Select from '../component/Select';
+import Search from '../component/Search'
 
 const useStyles = makeStyles((theme) => ({
   main:{
@@ -25,10 +26,12 @@ function App() {
   const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${count}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100000`)
     .then(response => response.json())
     .then(data => {
-      const promises = data.results.map((item) => {
+     let limitArr = data.results.slice(0, count);
+     console.log(limitArr);
+      const promises = limitArr.map((item) => {
           return fetch(item.url);
       });
       return Promise.all(promises);
@@ -44,6 +47,7 @@ function App() {
     <div>
       <main className={classes.main}>
         <Select count={count} setCount={setCount}></Select>
+        <Search></Search>
         <Grid container>
           {pokemons.map((pokemon) => (
             <Grid item xs={2} key={pokemon.id} className={classes.paper}>
