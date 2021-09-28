@@ -4,12 +4,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function ControlledOpenSelect() {
-  const [pokemon, setPokemon] = React.useState('');
+export default function ControlledOpenSelect({count, setCount}) {
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
-    setPokemon(event.target.value);
+    setCount(event.target.value);
   };
 
   const handleClose = () => {
@@ -30,7 +29,7 @@ export default function ControlledOpenSelect() {
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={pokemon}
+          value={count}
           label="Pokemon"
           onChange={handleChange}
         >

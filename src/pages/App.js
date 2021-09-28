@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  const [count, setCount] = useState(20);
   const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=50')
+    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${count}`)
     .then(response => response.json())
     .then(data => {
       const promises = data.results.map((item) => {
@@ -37,12 +38,12 @@ function App() {
       setPokemons(data);
     })
     .catch((err) => console.log(err));
-  }, [])
+  }, [count])
 
   return (
     <div>
       <main className={classes.main}>
-        <Select></Select>
+        <Select count={count} setCount={setCount}></Select>
         <Grid container>
           {pokemons.map((pokemon) => (
             <Grid item xs={2} key={pokemon.id} className={classes.paper}>
