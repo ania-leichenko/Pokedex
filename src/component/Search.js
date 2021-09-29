@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import {useState} from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -47,8 +46,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
-  const  [pokemonName, setPokemonName] = useState("");
+export default function PrimarySearchAppBar({setPokemonName}) {
+  
 
   const handleClick = (event) => {
     setPokemonName(event.target.value);
