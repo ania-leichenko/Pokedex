@@ -43,12 +43,21 @@ function App() {
   const [count, setCount] = useState(20);
   const [pokemons, setPokemons] = useState([]);
   const [pokemonName, setPokemonName] = useState("");
+  const  [currentPage, setCurrentPage] = useState(1);
+
 
   useEffect(() => {
+
+    console.log(currentPage);
+
     fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100000`)
       .then((response) => response.json())
       .then((data) => {
         let result = data.results;
+        let count = result.length / 20;
+        let end = currentPage * 20;
+        let start = end - 20;
+        result = result.slice(start, end);
         if (pokemonName !== "") {
           result = result.filter((item) => item.name.startsWith(pokemonName));
         }
@@ -65,7 +74,7 @@ function App() {
         setPokemons(data);
       })
       .catch((err) => console.log(err));
-  }, [count, pokemonName]);
+  }, [count, pokemonName, currentPage]);
 
   return (
     <div className={classes.root}>
@@ -93,7 +102,7 @@ function App() {
         </Grid>
       </main>
       <footer className={classes.footer}>
-        <Pagination></Pagination>
+        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}></Pagination>
       </footer>
     </div>
   );
