@@ -4,9 +4,10 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Select from "../component/Select";
 import Search from "../component/Search";
+import Box from "@mui/material/Box";
 
 const useStyles = makeStyles((theme) => ({
-  main: {
+  root: {
     flexGrow: 1,
     maxWidth: 1000,
     isplay: "block",
@@ -17,6 +18,18 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
+  },
+  header: {
+    textAlign: "center",
+  },
+  search: {
+    position: "relative",
+    top: "8px",
+    left: "70px",
+  },
+  pokemon1: {
+    position: "relative",
+    left: "80px",
   },
 }));
 
@@ -50,10 +63,22 @@ function App() {
   }, [count, pokemonName]);
 
   return (
-    <div>
-      <main className={classes.main}>
-        <Select count={count} setCount={setCount}></Select>
-        <Search setPokemonName={setPokemonName}></Search>
+    <div className={classes.root}>
+      <header className={classes.header}>
+        <Grid container>
+          <Grid item xs={6}>
+            <Box className={classes.search}>
+              <Search setPokemonName={setPokemonName}></Search>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box className={classes.pokemon1}>
+              <Select count={count} setCount={setCount}></Select>
+            </Box>
+          </Grid>
+        </Grid>
+      </header>
+      <main>
         <Grid container>
           {pokemons.map((pokemon) => (
             <Grid item xs={2} key={pokemon.id} className={classes.paper}>
