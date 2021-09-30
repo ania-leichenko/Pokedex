@@ -1,10 +1,11 @@
-import Card from "../component/Card";
+import Card from "../component/main/Card";
 import { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Select from "../component/Select";
-import Search from "../component/Search";
+import Select from "../component/header/Select";
+import Search from "../component/header/Search";
 import Box from "@mui/material/Box";
+import Pagination from '../component/footer/Pagination';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,9 +28,13 @@ const useStyles = makeStyles((theme) => ({
     top: "8px",
     left: "70px",
   },
-  pokemon1: {
+  select: {
     position: "relative",
     left: "80px",
+  },
+  footer: {
+    display: "flex",
+    alignItems: "center",
   },
 }));
 
@@ -72,7 +77,7 @@ function App() {
             </Box>
           </Grid>
           <Grid item xs={6}>
-            <Box className={classes.pokemon1}>
+            <Box className={classes.select}>
               <Select count={count} setCount={setCount}></Select>
             </Box>
           </Grid>
@@ -87,6 +92,9 @@ function App() {
           ))}
         </Grid>
       </main>
+      <footer className={classes.footer}>
+        <Pagination></Pagination>
+      </footer>
     </div>
   );
 }
