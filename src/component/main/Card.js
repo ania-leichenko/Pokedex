@@ -5,6 +5,27 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+
+ const colorChip = {
+  grass: "success",
+  fairy: "secondary",
+  poison: "error",
+  fire: "warning",
+  flying: "info",
+  water: "primary",
+  bug: "warning",
+  normal: "default",
+  electric: "secondary",
+  ground: "warning",
+  fighting: "secondary",
+  psychic: "error",
+  rock: "error",
+  ghost: "default",
+  ice: "info",
+  steel: "default",
+  dragon: "error",
+  dark: "secondary",
+ }
  
 const useStyles = makeStyles(() =>
   createStyles({
@@ -17,12 +38,13 @@ const useStyles = makeStyles(() =>
       height: "150px",
       width: "150px",
     },
+  
   })
 );
 
 export default function RecipeReviewCard({ pokemon }) {
   const classes = useStyles();
-
+  
   return (
     <Card className={classes.root}>
       <CardMedia className={classes.media} image={pokemon.sprites.front_default} />
@@ -30,11 +52,11 @@ export default function RecipeReviewCard({ pokemon }) {
         <h3>{pokemon.name}</h3>
         {
           pokemon.types.map((types => {
-
+    
             return(
               <Stack spacing={1} alignItems="center" padding="1px">
                 <Stack direction="row" spacing={1} >
-                  <Chip label={types.type.name} />
+                  <Chip className={classes.chip} label={types.type.name} color={colorChip[types.type.name] || "success"}  />
                 </Stack>
               </Stack>
             )
