@@ -1,10 +1,10 @@
-import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import * as React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-export default function ControlledOpenSelect({count, setCount}) {
+export default function ControlledOpenSelect({ count, setCount }) {
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
@@ -21,7 +21,7 @@ export default function ControlledOpenSelect({count, setCount}) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 300}}>
+      <FormControl sx={{ m: 1, minWidth: 300 }}>
         <InputLabel id="demo-controlled-open-select-label">Pokemon</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"

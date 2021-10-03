@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Select from "../component/header/Select";
 import Search from "../component/header/Search";
 import Box from "@mui/material/Box";
-import Pagination from '../component/footer/Pagination';
+import Pagination from "../component/footer/Pagination";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,28 +40,27 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [count, setCount] = useState(20);
+  const [countPerPage, setCountPerPage] = useState(20);
   const [pokemons, setPokemons] = useState([]);
   const [pokemonName, setPokemonName] = useState("");
-  const  [currentPage, setCurrentPage] = useState(1);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [countOfPage, setCountOfPage] = useState(1);
 
   useEffect(() => {
-
-    console.log(currentPage);
-
     fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100000`)
       .then((response) => response.json())
       .then((data) => {
         let result = data.results;
-        let count = result.length / 20;
-        let end = currentPage * 20;
-        let start = end - 20;
-        result = result.slice(start, end);
         if (pokemonName !== "") {
-          result = result.filter((item) => item.name.startsWith(pokemonName));
+          result = result.filter((item) => item.name.includes(pokemonName));
         }
-        result = result.slice(0, count);
+
+        setCountOfPage(Math.round(result.length / countPerPage));
+
+        const end = currentPage * countPerPage;
+        const start = end - countPerPage;
+        result = result.slice(start, end);
+
         const promises = result.map((item) => {
           return fetch(item.url);
         });
@@ -74,7 +73,11 @@ function App() {
         setPokemons(data);
       })
       .catch((err) => console.log(err));
-  }, [count, pokemonName, currentPage]);
+  }, [countPerPage, pokemonName, currentPage, setCountOfPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [countPerPage, pokemonName, setCurrentPage]);
 
   return (
     <div className={classes.root}>
@@ -87,7 +90,7 @@ function App() {
           </Grid>
           <Grid item xs={6}>
             <Box className={classes.select}>
-              <Select count={count} setCount={setCount}></Select>
+              <Select count={countPerPage} setCount={setCountPerPage}></Select>
             </Box>
           </Grid>
         </Grid>
@@ -102,7 +105,11 @@ function App() {
         </Grid>
       </main>
       <footer className={classes.footer}>
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}></Pagination>
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          countOfPage={countOfPage}
+        ></Pagination>
       </footer>
     </div>
   );

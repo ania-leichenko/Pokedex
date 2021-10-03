@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PaginationOutlined({setCurrentPage, currentPage}) {
+export default function PaginationOutlined({setCurrentPage, currentPage, countOfPage}) {
   const classes = useStyles();
 
   function handleClick(event, page) {
@@ -23,8 +23,8 @@ export default function PaginationOutlined({setCurrentPage, currentPage}) {
   return (
     <Stack spacing={2} className={classes.pagination}>
       <Pagination 
-       count={10}
        page={currentPage}
+       count={countOfPage}
        variant="outlined" 
        color="primary" 
        onChange={handleClick}
