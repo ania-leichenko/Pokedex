@@ -21,7 +21,7 @@ export default function ControlledOpenSelect({ count, setCount }) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 300 }}>
+      <FormControl sx={{ width: 300 }}>
         <InputLabel id="demo-controlled-open-select-label">Pokemon</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"

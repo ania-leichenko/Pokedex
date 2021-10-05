@@ -4,33 +4,14 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Select from "../component/header/Select";
 import Search from "../component/header/Search";
-import Box from "@mui/material/Box";
 import Pagination from "../component/footer/Pagination";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     maxWidth: 1000,
-    isplay: "block",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "30px",
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-  },
-  header: {
-    textAlign: "center",
-  },
-  search: {
-    position: "relative",
-    top: "8px",
-    left: "70px",
-  },
-  select: {
-    position: "relative",
-    left: "80px",
   },
   footer: {
     display: "flex",
@@ -106,24 +87,32 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <header className={classes.header}>
-        <Grid container>
-          <Grid item xs={6}>
-            <Box className={classes.search}>
-              <Search setPokemonName={setPokemonName}></Search>
-            </Box>
+      <header>
+        <Grid
+          container
+          alignItems="center"
+          spacing={2}
+          justifyContent="space-around"
+        >
+          <Grid item xs={12} sm={6}>
+            <Search setPokemonName={setPokemonName}></Search>
           </Grid>
-          <Grid item xs={6}>
-            <Box className={classes.select}>
-              <Select count={countPerPage} setCount={setCountPerPage}></Select>
-            </Box>
+          <Grid item xs={12} sm={6}>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Select
+                  count={countPerPage}
+                  setCount={setCountPerPage}
+                ></Select>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </header>
       <main>
-        <Grid container>
+        <Grid container spacing={2}>
           {pokemons.map((pokemon) => (
-            <Grid item xs={2} key={pokemon.id} className={classes.paper}>
+            <Grid item xs={6} sm={4} md={2} key={pokemon.id}>
               <Card pokemon={pokemon}></Card>
             </Grid>
           ))}
