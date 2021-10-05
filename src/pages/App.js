@@ -45,35 +45,64 @@ function App() {
   const [pokemonName, setPokemonName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [countOfPage, setCountOfPage] = useState(1);
+  const [allPokemons, setAllPokemons] = useState([]);
+  const [pokemonInfo, setPokemonInfo] = useState({});
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100000`)
       .then((response) => response.json())
       .then((data) => {
-        let result = data.results;
-        if (pokemonName !== "") {
-          result = result.filter((item) => item.name.includes(pokemonName));
-        }
+        setAllPokemons(data.results);
+      });
+  }, []);
 
-        setCountOfPage(Math.round(result.length / countPerPage));
+  console.log("pokemonInfo", pokemonInfo);
 
-        const end = currentPage * countPerPage;
-        const start = end - countPerPage;
-        result = result.slice(start, end);
+  useEffect(() => {
+    let result = allPokemons;
+    if (pokemonName !== "") {
+      result = result.filter((item) => item.name.includes(pokemonName));
+    }
 
-        const promises = result.map((item) => {
-          return fetch(item.url);
-        });
-        return Promise.all(promises);
-      })
-      .then((responses) =>
-        Promise.all(responses.map((response) => response.json()))
-      )
+    setCountOfPage(Math.round(result.length / countPerPage));
+
+    const end = currentPage * countPerPage;
+    const start = end - countPerPage;
+    result = result.slice(start, end);
+
+    let needSave = false;
+    const promises = result.map((item) => {
+      if (pokemonInfo[item.name]) {
+        return pokemonInfo[item.name];
+      }
+
+      needSave = true;
+      return fetch(item.url).then((response) => response.json());
+    });
+    Promise.all(promises)
       .then((data) => {
+        if (needSave) {
+          const info = {};
+          data.forEach((item) => {
+            info[item.name] = item;
+          });
+          setPokemonInfo({
+            ...pokemonInfo,
+            ...info,
+          });
+        }
         setPokemons(data);
       })
       .catch((err) => console.log(err));
-  }, [countPerPage, pokemonName, currentPage, setCountOfPage]);
+  }, [
+    countPerPage,
+    pokemonName,
+    currentPage,
+    setCountOfPage,
+    allPokemons,
+    setPokemonInfo,
+    pokemonInfo,
+  ]);
 
   useEffect(() => {
     setCurrentPage(1);
