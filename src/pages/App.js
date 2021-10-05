@@ -56,8 +56,6 @@ function App() {
       });
   }, []);
 
-  console.log("pokemonInfo", pokemonInfo);
-
   useEffect(() => {
     let result = allPokemons;
     if (pokemonName !== "") {
@@ -79,21 +77,19 @@ function App() {
       needSave = true;
       return fetch(item.url).then((response) => response.json());
     });
-    Promise.all(promises)
-      .then((data) => {
-        if (needSave) {
-          const info = {};
-          data.forEach((item) => {
-            info[item.name] = item;
-          });
-          setPokemonInfo({
-            ...pokemonInfo,
-            ...info,
-          });
-        }
-        setPokemons(data);
-      })
-      .catch((err) => console.log(err));
+    Promise.all(promises).then((data) => {
+      if (needSave) {
+        const info = {};
+        data.forEach((item) => {
+          info[item.name] = item;
+        });
+        setPokemonInfo({
+          ...pokemonInfo,
+          ...info,
+        });
+      }
+      setPokemons(data);
+    });
   }, [
     countPerPage,
     pokemonName,
