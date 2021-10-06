@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Select from "../component/header/Select";
 import Search from "../component/header/Search";
 import Pagination from "../component/footer/Pagination";
+import TagsSelect from "../component/header/Tags-select";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,12 +99,15 @@ function App() {
             <Search setPokemonName={setPokemonName}></Search>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
+            <Grid container spacing={2} justifyContent="flex-end">
+              <Grid item xs={6}>
                 <Select
                   count={countPerPage}
                   setCount={setCountPerPage}
                 ></Select>
+              </Grid>
+              <Grid item xs={6}>
+                <TagsSelect></TagsSelect>
               </Grid>
             </Grid>
           </Grid>
