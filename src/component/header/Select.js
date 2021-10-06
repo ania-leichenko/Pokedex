@@ -20,24 +20,22 @@ export default function ControlledOpenSelect({ count, setCount }) {
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: 300 }}>
-        <InputLabel id="demo-controlled-open-select-label">Pokemon</InputLabel>
-        <Select
-          labelId="demo-controlled-open-select-label"
-          id="demo-controlled-open-select"
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={count}
-          label="Pokemon"
-          onChange={handleChange}
-        >
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={50}>50</MenuItem>
-          <MenuItem value={100}>100</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl fullWidth>
+      <InputLabel id="demo-controlled-open-select-label">Pokemon</InputLabel>
+      <Select
+        labelId="demo-controlled-open-select-label"
+        id="demo-controlled-open-select"
+        open={open}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        value={count}
+        label="Pokemon"
+        onChange={handleChange}
+      >
+        <MenuItem value={20}>20</MenuItem>
+        <MenuItem value={50}>50</MenuItem>
+        <MenuItem value={100}>100</MenuItem>
+      </Select>
+    </FormControl>
   );
 }
