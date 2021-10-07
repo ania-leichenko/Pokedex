@@ -29,14 +29,45 @@ function App() {
   const [countOfPage, setCountOfPage] = useState(1);
   const [allPokemons, setAllPokemons] = useState([]);
   const [pokemonInfo, setPokemonInfo] = useState({});
+  const [pokemonTags, setPokemonTags] = useState([]);
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100000`)
-      .then((response) => response.json())
-      .then((data) => {
-        setAllPokemons(data.results);
+    if (pokemonTags.length === 0) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100000`)
+        .then((response) => response.json())
+        .then((data) => {
+          setAllPokemons(data.results);
+        });
+    } else {
+      const promises = pokemonTags.map((tag) => {
+        return fetch(`https://pokeapi.co/api/v2/type/${tag}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const arr = data.pokemon.map((item) => {
+              return item.pokemon;
+            });
+            return arr;
+          });
       });
-  }, []);
+      Promise.all(promises).then((arr) => {
+        const arr2 = [];
+        arr.forEach((item) => {
+          arr2.push(...item);
+        });
+
+        const names = {};
+        const result = arr2.filter((element) => {
+          if (names[element.name]) {
+            return false;
+          }
+
+          names[element.name] = 1;
+          return true;
+        });
+        setAllPokemons(result);
+      });
+    }
+  }, [pokemonTags]);
 
   useEffect(() => {
     let result = allPokemons;
@@ -107,7 +138,10 @@ function App() {
                 ></Select>
               </Grid>
               <Grid item xs={6}>
-                <TagsSelect></TagsSelect>
+                <TagsSelect
+                  pokemonTags={pokemonTags}
+                  setPokemonTags={setPokemonTags}
+                ></TagsSelect>
               </Grid>
             </Grid>
           </Grid>
