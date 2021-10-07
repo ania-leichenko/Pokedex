@@ -44,7 +44,7 @@ export default function MultipleSelectCheckmarks({
           multiple
           value={pokemonTags}
           onChange={handleChange}
-          input={<OutlinedInput label="Tag" />}
+          input={<OutlinedInput label=" Pokemon Tag" />}
           renderValue={(selected) => selected.join(", ")}
         >
           {tags.map((tag) => (
